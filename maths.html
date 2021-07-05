@@ -1,0 +1,55 @@
+<html>
+
+<body>
+
+    <span id=first_number></span><span id=first_emojis>: </span><br />
+    +<br />
+    <span id=second_number></span><span id=second_emojis>: </span><br />
+    =<br />
+    <span id=total_number></span><span id=total_emojis>: </span>
+
+</body>
+
+<script>
+
+    // Default action
+
+    let action = "+";
+
+    // Set first number and emojis
+
+    var a = parseInt(prompt("first number"));
+    document.getElementById("first_number").innerHTML += a;
+
+    for(var i = 0; i < a; i++){
+        document.getElementById("first_emojis").innerHTML += "&#128068\;"
+    }
+
+    // Set second number and emojis
+
+    let b = parseInt(prompt("second number"));
+    document.getElementById("second_number").innerHTML += b;
+
+    for(var j = 0; j < b; j++){
+        document.getElementById("second_emojis").innerHTML += "&#128069\;"
+    }
+
+    // Set answer and emojis
+
+    document.getElementById("total_number").innerHTML += calculate(a, action, b);
+
+    for(var k = 0; k < calculate(a, action, b); k++){
+        document.getElementById("total_emojis").innerHTML += "&#128061\;"
+    }
+
+    // Helper function
+
+    function calculate(a, action, b) {
+        switch(action) {
+            case "+" : return a + b;
+            default: return "I don't know!";
+        }
+    }
+</script>
+
+</html>
