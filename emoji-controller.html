@@ -1,0 +1,71 @@
+<html>
+    <style>
+        body {
+            background-color: lightseagreen;
+        }
+        span {
+            position: absolute;
+            font-size: 100px;
+        }
+    </style>
+    <body>
+        <span id=emoji>&#128378</span>
+
+        <script>
+            document.addEventListener('keydown', logKey);
+
+            function logKey(e) {
+                switch(e.code) {
+                    case "ArrowRight": 
+                        positionDecider(1)
+                        break
+                    case "ArrowLeft":
+                        positionDecider(-1)
+                        break
+                }
+            }
+
+            window.onresize = setEmojiPosition(0)
+
+            var currentPositonState = 0 // center
+
+            function positionDecider(direction) {
+                if(currentPositonState == 0) {
+                    setEmojiPosition(direction)
+                } else if(currentPositonState == -1 && direction == -1) {
+                    // do nothing
+                } else if(currentPositonState == -1 && direction == 1) {
+                    setEmojiPosition(0)
+                } else if(currentPositonState == 1 && direction == -1) {
+                    setEmojiPosition(0)
+                } else if(currentPositonState == 1 && direction == 1) {
+                    // do nothing
+                }
+            }
+
+            function setEmojiPosition(positionState) {
+                let w = window.innerWidth
+                let h = window.innerHeight
+
+                let y = h * 3/4
+                var x
+
+                switch(positionState) {
+                    case -1:
+                        x = w * 1/4 - 50
+                        break
+                    case 0:
+                        x = w * 1/2 - 50
+                        break
+                    case 1:
+                        x = w * 3/4 - 50
+                        break
+                }
+
+                document.getElementById("emoji").style.left = x
+                document.getElementById("emoji").style.top = y
+                currentPositonState = positionState
+            }
+        </script>
+    </body>
+</html>
