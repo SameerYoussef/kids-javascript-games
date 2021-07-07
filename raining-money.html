@@ -1,0 +1,39 @@
+<html>
+    <style>
+        span {
+            font-size: 100px;
+            position: absolute;
+        }
+    </style>
+<body>
+    <script>
+
+        columnRandomizer()
+
+        async function columnRandomizer() {
+            while (true) {
+                rainDown(Math.floor(1 + Math.random() * 3) / 4)
+                await sleep(1000)
+            }
+        }
+
+        async function rainDown(xOffSet) {
+            let emoji = document.createElement("span")
+            emoji.style.left = window.innerWidth * xOffSet - 50
+            emoji.innerHTML = "&#128176"
+            document.body.appendChild(emoji)
+
+            for (var i=-100; i < window.innerHeight - 100; i++) {
+                emoji.style.top = i
+                await sleep(5)
+            }
+            await sleep(500)
+            emoji.remove()
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>
