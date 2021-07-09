@@ -4,4 +4,6 @@
 
 [Emoji controller game!](https://sameeryoussef.github.io/emoji-controller.html)
 
+[Fancy emoji controller game!](https://sameeryoussef.github.io/emoji-controller-advanced.html)
+
 [Raining money game!](https://sameeryoussef.github.io/raining-money.html)

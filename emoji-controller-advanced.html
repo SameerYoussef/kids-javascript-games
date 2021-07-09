@@ -1,0 +1,115 @@
+<html>
+    <style>
+        body {
+            background-color: lightseagreen;
+        }
+        span {
+            position: absolute;
+            font-size: 100px;
+        }
+        #emoji {
+            transform: rotate(0deg);
+        }
+    </style>
+    <body>
+        <span id=emoji>&#128378</span>
+        
+        <script>
+            const dir = {
+               STILL: "still",
+               LEFT: "left",
+               RIGHT: "right",
+            }
+
+            var column = {
+                LEFT: Math.floor(window.innerWidth * 1/4) - 50,
+                CENTER: Math.floor(window.innerWidth * 2/4) - 50,
+                RIGHT: Math.floor(window.innerWidth * 3/4) - 50,
+            }
+
+            document.addEventListener('keydown', logKey);
+            window.onload = motion(dir.STILL)
+            window.addEventListener("resize", () => { motion(dir.STILL) })
+            var currentDir = dir.STILL
+
+            function logKey(e) {
+                switch(e.code) {
+                    case "ArrowRight": 
+                        motion(dir.RIGHT)
+                        break
+                    case "ArrowLeft":
+                        motion(dir.LEFT)
+                        break
+                }
+            }
+
+            function getX() {
+                return parseInt(document.getElementById("emoji").style.left, 10)
+            }
+
+            function adjustXBy(increment) {
+                document.getElementById("emoji").style.left = getX() + increment
+            }
+
+            function getMyLeftCol() {
+                if(getX() <= column.CENTER) {
+                    return column.LEFT
+                }
+                return column.CENTER
+            }
+
+            function getMyRightCol() {
+                if(getX() < column.CENTER) {
+                    return column.CENTER
+                }
+                return column.RIGHT
+            }
+
+            function setRotation() {
+                let w = window.innerWidth
+                let x = getX()
+                let percentage = Math.floor((x + 50 - w/2)/(w/4)*360)
+                document.getElementById("emoji").style.rotate = (percentage + "deg")
+            }
+
+            async function motion(direction) {
+
+                let myLeftCol = getMyLeftCol()
+                let myRightCol = getMyRightCol()
+                let stepSize = Math.floor(window.innerWidth/200)
+                let emoji = document.getElementById("emoji").style
+
+                switch(direction) {
+                    case dir.STILL:
+                        emoji.top = window.innerHeight * 3/4
+                        emoji.left = window.innerWidth / 2 - 50
+                        emoji.rotate = "0deg"
+                        column.LEFT = Math.floor(window.innerWidth * 1/4) - 50
+                        column.CENTER = Math.floor(window.innerWidth * 2/4) - 50
+                        column.RIGHT = Math.floor(window.innerWidth * 3/4) - 50
+                        break
+                    case dir.LEFT:
+                        currentDir = dir.LEFT
+                        while(getX() > myLeftCol && currentDir == dir.LEFT) {
+                            adjustXBy(-1 * stepSize)
+                            setRotation()
+                            await sleep(1)
+                        }
+                        break
+                    case dir.RIGHT:
+                        currentDir = dir.RIGHT
+                        while(getX() < myRightCol && currentDir == dir.RIGHT) {
+                            adjustXBy(stepSize)
+                            setRotation()
+                            await sleep(1)
+                        }
+                        break
+                }
+            }
+
+            function sleep(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms))
+            }
+        </script>
+    </body>
+</html>
