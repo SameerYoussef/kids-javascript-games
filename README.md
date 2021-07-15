@@ -7,3 +7,5 @@
 [Fancy emoji controller game!](https://sameeryoussef.github.io/emoji-controller-advanced.html)
 
 [Raining money game!](https://sameeryoussef.github.io/raining-money.html)
+
+[Raining money game with counter!](https://sameeryoussef.github.io/raining-money-catcher.html)
